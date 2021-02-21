@@ -1,0 +1,195 @@
+#[ w++ README.wpp> README.md ]
+
+let \n "\n"
+
+prefix "md/" {
+    # Headers
+    let h1(x) "# " .. x .. \n
+    let h2(x) "## " .. x .. \n
+    let h3(x) "### " .. x .. \n
+    let h4(x) "#### " .. x .. \n
+    let h5(x) "##### " .. x .. \n
+    let h6(x) "###### " .. x .. \n
+
+    let surr(x, y) x .. y .. x
+
+    # Basic styling
+    let em(x) md/surr("*", x)
+    let b(x) md/surr("*", x)
+
+    # Code
+    let code(x) md/surr("`", x)
+    let codeblock(lang, x) md/surr("```", lang .. \n .. x .. \n) .. \n
+
+    # Lists
+    let ul(x) "* " .. x .. \n
+    let ol(x) "1. " .. x .. \n
+
+    # Horizontal separator
+    let hr "---" .. \n
+
+    # Misc
+    let link(name, url) "[" .. name .. "](" .. url .. ")"
+    let img(name, url) "![" .. name .. "](" .. url .. ")"
+    let quote(x) "> " .. x .. \n
+}
+
+r#"<p align=center><img alt="logo" src="docs/img/logo.png" width=20%></p>\n"#
+\n
+
+md/h1("wot++")
+"Wot++ is a language for writing documents that allows you to build up your own library of abstractions
+or use those made by others.
+
+Wot++ has some interesting features like meta-programming, the ability to invoke a shell,
+bit-level manipulation, recursion and conditionals.\n"
+\n
+
+md/img("c++", "https://img.shields.io/badge/c%2B%2B-%3E%3D17-blue.svg?style=flat") .. \n
+md/link(md/img("license", "https://img.shields.io/github/license/Jackojc/wotpp.svg?style=flat"), "./LICENSE") .. \n
+md/img("code size", "https://img.shields.io/github/languages/code-size/Jackojc/wotpp?style=flat-square") .. \n
+md/link(md/img("issues", "https://img.shields.io/github/issues/Jackojc/wotpp.svg?style=flat"), "https://github.com/Jackojc/wotpp/issues") .. \n
+md/link(md/img("discord", "https://img.shields.io/discord/537732103765229590.svg?label=discord&style=flat"), "https://discord.gg/RmgjcES") .. \n
+\n
+
+md/h3("Getting Started & Reference")
+"See the introduction" .. md/link("here", "docs/introduction.md") ..
+" and see the reference" .. md/link("here", "docs/reference.md") .. ".\n"
+\n
+
+md/h3("Example")
+md/codeblock("wpp", r$"
+#[ Setup some macros. ]
+let \\n "\\n"
+let \\n2 "\\n\\n"
+
+let #(x) "# " .. x .. \\n2
+let ##(x) "## " .. x .. \\n2
+let ###(x) "### " .. x .. \\n2
+let ####(x) "#### " .. x .. \\n2
+let #####(x) "##### " .. x .. \\n2
+
+let >(x) "> " .. x .. \\n2
+
+let *(x) " *" .. x .. "* "
+let **(x) " **" .. x .. "** "
+
+let link(name, url) " [" .. name .. "](" .. url .. ") "
+
+
+#[ Our actual document... ]
+
+#("Hello, World!")
+###("A short example of wot++ code.")
+
+>("Here's a link: " .. link("Discord", "https://discord.gg/hQ7yS9dxcp"))
+
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dictum volutpat lacus,
+sollicitudin pellentesque tellus viverra non. Phasellus est lorem, porta ut metus vitae,
+ultricies semper lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+posuere cubilia curae; Suspendisse sollicitudin egestas tristique. Nullam condimentum
+vehicula mi, eu hendrerit libero condimentum posuere. Suspendisse fringilla lacus nulla,
+ut finibus nisi vulputate consequat. Vestibulum efficitur ultricies dolor, a iaculis diam
+interdum ut. Nunc rhoncus, lorem mattis porttitor luctus, ligula tellus vulputate arcu,
+vitae blandit nisl ipsum ac augue. Nulla a ex eget risus tristique consequat nec ac lacus.
+Phasellus blandit massa non iaculis finibus. Quisque suscipit pharetra iaculis. Maecenas
+ac turpis est. Aenean id est vitae mi facilisis luctus ut a nulla. Mauris facilisis, sem
+eu rhoncus iaculis, justo erat efficitur purus, et dictum mi lorem sit amet neque."
+"$)
+\n
+
+md/h3("Prerequisites")
+md/ul("A C++17 compliant compiler. (GCC & Clang work)")
+md/ul("Meson & Ninja")
+md/ul("libasan (optional, required for sanitizer support)")
+md/ul("libreadline (optional, required for REPL)")
+md/ul("Python3 (optional, required for running test suite)")
+\n
+
+md/h3("Build & Run")
+md/codeblock("wpp", r$"
+$ meson build
+$ ninja -C build
+"$)
+\n
+
+"You can specify the compiler and linker to use through environment variables:\n"
+md/codeblock("wpp", r$"
+$ CXX=clang++ CXX_LD=lld meson build
+"$)
+\n
+
+"Supported flags:\n"
+md/codeblock("wpp", r$"
+-Dnative=true               # enable host machine specific optimisations
+-Dsanitizers=true           # enable sanitizers (undefined,address)
+-Dprofile=true              # enable profiling support (uftrace etc.)
+-Ddisable_run=false         # disable the `run` intrinsic for security purposes
+-Dbuildtype=debugoptimised  # enable symbols
+"$)
+\n
+
+md/quote("List of built-in Meson options can be found " .. md/link("here", "https://mesonbuild.com/Builtin-options.html") .. ".")
+\n
+
+"An example:\n"
+md/codeblock("wpp", r$"
+$ meson -Dsanitizers=true -Dprofile=true build
+"$)
+\n
+
+"If you already have configured a build directory, you'll need to add `--reconfigure`:\n"
+md/codeblock("wpp", r$"
+$ meson --reconfigure -Dsanitizers=true -Dprofile=true build
+"$)
+\n
+
+"To run the tests:\n"
+md/codeblock("wpp", r$"
+$ ninja -C build test
+"$)
+\n
+
+### Installation
+md/codeblock("wpp", r$"
+$ cd build/
+$ meson install  # requires root perms (sudo/su/doas)
+"$)
+\n
+
+"If you want to specify a custom install directory:\n"
+md/codeblock("wpp", r$"
+$ cd build/
+$ meson configure --prefix=/usr/local/
+$ DESTDIR=/ meson install
+"$)
+\n
+
+md/h3("Acknowledgements")
+"Thanks, in no particular order:\n"
+md/ul(md/link("Noxabellus", "https://github.com/noxabellus"))
+md/ul(md/link("DeKrain", "https://github.com/dekrain"))
+md/ul(md/link("AnonymousPlayer", "https://github.com/Anonymus-Player"))
+md/ul(md/link("Ciarán", "https://github.com/iCiaran"))
+md/ul(md/link("Binkiklou", "https://github.com/binkiklou"))
+md/ul(md/link("Strexicious", "https://github.com/strexicious/"))
+md/ul(md/link("Eremiell", "https://github.com/Eremiell"))
+md/ul(md/link("Violetas", "https://github.com/violetastcs"))
+md/ul(md/link("Moonsheep", "https://github.com/jlagarespo"))
+md/ul(md/link("Samuel", "https://github.com/swr06/"))
+\n
+
+"And everyone else who I may have failed to mention over the years.\n"
+\n
+
+md/h3("History")
+"See the timeline " .. md/link("here", "docs/history/README.md") .. ".\n"
+\n
+
+md/h3("License")
+"This project uses the MPL-2.0 license. (check [LICENSE.md](LICENSE.md))\n"
+\n
+
+md/h3("Progress & Discussion")
+"You can join the discord server in order to follow progress and/or contribute to discussion of the project. (https://discord.gg/hQ7yS9dxcp)\n"
+\n
