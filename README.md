@@ -18,7 +18,6 @@ See the introduction[here](docs/introduction.md) and see the reference[here](doc
 
 ### Example
 ```wpp
-
 #[ Setup some macros. ]
 let \n "\n"
 let \n2 "\n\n"
@@ -55,7 +54,6 @@ vitae blandit nisl ipsum ac augue. Nulla a ex eget risus tristique consequat nec
 Phasellus blandit massa non iaculis finibus. Quisque suscipit pharetra iaculis. Maecenas
 ac turpis est. Aenean id est vitae mi facilisis luctus ut a nulla. Mauris facilisis, sem
 eu rhoncus iaculis, justo erat efficitur purus, et dictum mi lorem sit amet neque."
-
 ```
 
 ### Prerequisites
