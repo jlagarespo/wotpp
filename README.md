@@ -66,68 +66,52 @@ eu rhoncus iaculis, justo erat efficitur purus, et dictum mi lorem sit amet nequ
 * Python3 (optional, required for running test suite)
 
 ### Build & Run
-```wpp
-
+```sh
 $ meson build
 $ ninja -C build
-
 ```
 
 You can specify the compiler and linker to use through environment variables:
-```wpp
-
+```sh
 $ CXX=clang++ CXX_LD=lld meson build
-
 ```
 
 Supported flags:
-```wpp
-
+```
 -Dnative=true               # enable host machine specific optimisations
 -Dsanitizers=true           # enable sanitizers (undefined,address)
 -Dprofile=true              # enable profiling support (uftrace etc.)
 -Ddisable_run=false         # disable the `run` intrinsic for security purposes
 -Dbuildtype=debugoptimised  # enable symbols
-
 ```
 
 > List of built-in Meson options can be found [here](https://mesonbuild.com/Builtin-options.html).
 
 An example:
-```wpp
-
+```sh
 $ meson -Dsanitizers=true -Dprofile=true build
-
 ```
 
 If you already have configured a build directory, you'll need to add `--reconfigure`:
-```wpp
-
+```sh
 $ meson --reconfigure -Dsanitizers=true -Dprofile=true build
-
 ```
 
 To run the tests:
-```wpp
-
+```sh
 $ ninja -C build test
-
 ```
 
-```wpp
-
+```sh
 $ cd build/
 $ meson install  # requires root perms (sudo/su/doas)
-
 ```
 
 If you want to specify a custom install directory:
-```wpp
-
+```sh
 $ cd build/
 $ meson configure --prefix=/usr/local/
 $ DESTDIR=/ meson install
-
 ```
 
 ### Acknowledgements

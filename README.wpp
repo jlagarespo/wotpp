@@ -107,62 +107,46 @@ md/ul("Python3 (optional, required for running test suite)")
 \n
 
 md/h3("Build & Run")
-md/codeblock("wpp", r$"
-$ meson build
-$ ninja -C build
-"$)
+md/codeblock("sh", r$"$ meson build
+$ ninja -C build"$)
 \n
 
 "You can specify the compiler and linker to use through environment variables:\n"
-md/codeblock("wpp", r$"
-$ CXX=clang++ CXX_LD=lld meson build
-"$)
+md/codeblock("sh", r$"$ CXX=clang++ CXX_LD=lld meson build"$)
 \n
 
 "Supported flags:\n"
-md/codeblock("wpp", r$"
--Dnative=true               # enable host machine specific optimisations
+md/codeblock("", r$"-Dnative=true               # enable host machine specific optimisations
 -Dsanitizers=true           # enable sanitizers (undefined,address)
 -Dprofile=true              # enable profiling support (uftrace etc.)
 -Ddisable_run=false         # disable the `run` intrinsic for security purposes
--Dbuildtype=debugoptimised  # enable symbols
-"$)
+-Dbuildtype=debugoptimised  # enable symbols"$)
 \n
 
 md/quote("List of built-in Meson options can be found " .. md/link("here", "https://mesonbuild.com/Builtin-options.html") .. ".")
 \n
 
 "An example:\n"
-md/codeblock("wpp", r$"
-$ meson -Dsanitizers=true -Dprofile=true build
-"$)
+md/codeblock("sh", r$"$ meson -Dsanitizers=true -Dprofile=true build"$)
 \n
 
 "If you already have configured a build directory, you'll need to add `--reconfigure`:\n"
-md/codeblock("wpp", r$"
-$ meson --reconfigure -Dsanitizers=true -Dprofile=true build
-"$)
+md/codeblock("sh", r$"$ meson --reconfigure -Dsanitizers=true -Dprofile=true build"$)
 \n
 
 "To run the tests:\n"
-md/codeblock("wpp", r$"
-$ ninja -C build test
-"$)
+md/codeblock("sh", r$"$ ninja -C build test"$)
 \n
 
 ### Installation
-md/codeblock("wpp", r$"
-$ cd build/
-$ meson install  # requires root perms (sudo/su/doas)
-"$)
+md/codeblock("sh", r$"$ cd build/
+$ meson install  # requires root perms (sudo/su/doas)"$)
 \n
 
 "If you want to specify a custom install directory:\n"
-md/codeblock("wpp", r$"
-$ cd build/
+md/codeblock("sh", r$"$ cd build/
 $ meson configure --prefix=/usr/local/
-$ DESTDIR=/ meson install
-"$)
+$ DESTDIR=/ meson install"$)
 \n
 
 md/h3("Acknowledgements")
